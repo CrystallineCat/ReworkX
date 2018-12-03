@@ -1,7 +1,7 @@
 import projx as px
 
 
-def try_to_transform(source, etl, target):
+def try_to_transform(source: str, etl: str, target: str) -> None:
     graph  = px.load_graph(f'examples/{source}.graph.yaml')
     expect = px.load_graph(f'examples/{target}.graph.yaml')
     via    = px.load_etl  (f'examples/{etl}.etl.yaml')
@@ -11,7 +11,7 @@ def try_to_transform(source, etl, target):
     assert px.content_of(result)['edges'] == px.content_of(expect)['edges']
 
 
-def test_project_etl():
+def test_apply_etl() -> None:
     try_to_transform('example', 'project',         'projected')
     try_to_transform('example', 'transfer',        'transferred')
     try_to_transform('example', 'combine',         'combined')
