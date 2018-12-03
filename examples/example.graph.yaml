@@ -1,0 +1,14 @@
+{edges: [[1, 2, {type: works_at}], [1, 3, {type: lives_in}], [2, 3, {type: located_in}],
+        [2, 7, {type: works_at}], [3, 4, {type: connected_to}], [3, 7, {type: lives_in}],
+        [3, 11, {type: lives_in}], [4, 5, {type: connected_to}], [4, 7, {type: works_at}],
+        [4, 8, {type: lives_in}], [4, 9, {type: lives_in}], [4, 10, {type: connected_to}],
+        [5, 6, {type: lives_in}], [5, 8, {type: works_at}], [5, 12, {type: lives_in}],
+        [5, 13, {type: located_in}], [9, 10, {type: works_at}], [12, 13, {type: works_at}],
+        [13, 14, {type: works_at}]], nodes: [[1, {label: davebshow, type: Person}],
+        [2, {label: western, type: Institution}], [3, {label: london, type: City}],
+        [4, {label: the matrix, type: Institution}], [5, {label: toronto, type: City}],
+        [6, {label: gandalf, type: Person}], [7, {label: versae, type: Person}], [
+            8, {label: neo, type: Person}], [9, {label: r2d2, type: Person}], [10,
+            {label: alderon, type: City}], [11, {label: curly, type: Person}], [12,
+            {label: adam, type: Person}], [13, {label: canland, type: Institution}],
+        [14, {label: bro, type: Person}]]}

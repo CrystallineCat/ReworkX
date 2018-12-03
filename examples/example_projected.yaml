@@ -1,0 +1,76 @@
+edges:
+- !!python/tuple
+  - 0
+  - 6
+  - name: {london: 2, western: 2}
+    weight: 0.6666666666666666
+- !!python/tuple
+  - 0
+  - 10
+  - name: {london: 2}
+    weight: 0.5
+- !!python/tuple
+  - 5
+  - 7
+  - name: {toronto: 2}
+    weight: 0.5
+- !!python/tuple
+  - 5
+  - 11
+  - name: {toronto: 2}
+    weight: 0.5
+- !!python/tuple
+  - 6
+  - 7
+  - name: {the matrix: 2}
+    weight: 0.25
+- !!python/tuple
+  - 6
+  - 8
+  - name: {the matrix: 2}
+    weight: 0.3333333333333333
+- !!python/tuple
+  - 6
+  - 10
+  - name: {london: 2}
+    weight: 0.3333333333333333
+- !!python/tuple
+  - 7
+  - 8
+  - name: {the matrix: 2}
+    weight: 0.5
+- !!python/tuple
+  - 7
+  - 11
+  - name: {toronto: 2}
+    weight: 0.3333333333333333
+- !!python/tuple
+  - 11
+  - 13
+  - name: {canland: 2}
+    weight: 0.5
+nodes:
+- !!python/tuple
+  - 0
+  - {label: davebshow, type: Person}
+- !!python/tuple
+  - 5
+  - {label: gandalf, type: Person}
+- !!python/tuple
+  - 6
+  - {label: versae, type: Person}
+- !!python/tuple
+  - 7
+  - {label: neo, type: Person}
+- !!python/tuple
+  - 8
+  - {label: r2d2, type: Person}
+- !!python/tuple
+  - 10
+  - {label: curly, type: Person}
+- !!python/tuple
+  - 11
+  - {label: adam, type: Person}
+- !!python/tuple
+  - 13
+  - {label: bro, type: Person}
