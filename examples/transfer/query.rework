@@ -1,0 +1,5 @@
+MATCH GRAPH (c:City)-(i:Institution)
+TRANSFER    (c)-(i)
+METHOD      EDGES Person
+SET         city = c.label
+DELETE      c

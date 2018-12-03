@@ -1,7 +1,5 @@
 extractor:
     networkx:
-        edge_type_attr: type
-        node_type_attr: type
         traversal:
         -   node: {alias: c, type: City}
         -   edge: {}

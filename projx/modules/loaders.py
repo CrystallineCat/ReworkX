@@ -28,7 +28,7 @@ def nx2nx_loader(extractor, stream, transformers, loader_json, graph):
         projector = nxprojx.NXProjector(max(graph.nodes()))
         for trans in stream(transformers, extractor_json):
             record, trans_kwrd, trans, attrs = trans
-            method = trans.get("method", {"none": []})
+            method = trans.get("method", {'attrs': {"args": []}})
             method_kwrd = list(method.keys())[0]
             params = method.get(method_kwrd, {"args": []})["args"]
             src, target, to_del = _apply_nx2nx_transformer(trans, record)

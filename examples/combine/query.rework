@@ -1,0 +1,4 @@
+MATCH GRAPH (c:City)-(i:Institution)
+COMBINE     (c)-(i)
+SET         type = "Geo Institution", city_name = c.label, inst_name = i.label
+DELETE      c, i

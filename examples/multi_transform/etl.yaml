@@ -11,11 +11,6 @@ loader:
     nx2nx: {}
 transformers:
 -   transfer:
-        delete:
-            alias: []
-        method:
-            attrs:
-                args: []
         pattern:
         -   node: {alias: i}
         -   edge: {}
@@ -32,5 +27,3 @@ transformers:
         -   node: {alias: p1}
         -   edge: {}
         -   node: {alias: c}
-        set:
-        - {}

@@ -1,0 +1,6 @@
+MATCH SUBGRAPH (p1:Person)-(i:Institution)-(c:City)
+TRANSFER       (i)-(c)
+SET            inst = i.label
+PROJECT        (p1)-(c)
+METHOD JACCARD Institution
+DELETE         i

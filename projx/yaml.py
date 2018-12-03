@@ -39,6 +39,12 @@ def dump_graph(graph: nx.Graph, filename: str) -> None:
         yaml.add_representer(tuple, yaml.Dumper.represent_tuple)
 
 
+
+def load_query(filename: str) -> str:
+    with open(filename) as file:
+        return '\n'.join(file.readlines())
+
+
 def load_etl(filename: str) -> dict:
     with open(filename) as file:
         return yaml.load(file)

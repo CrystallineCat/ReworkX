@@ -38,7 +38,12 @@ clause_type: 'TRANSFER'
 clause_params: pattern=path dsm_clauses;
 
 @join_dicts
-dsm_clauses: d s m | d m s | s d m | s m d | m s d | m d s;
+dsm_clauses: dsm_clauses d
+           | dsm_clauses s
+           | dsm_clauses m
+           | d
+           | s
+           | m;
 
 @key_value
 d: 'DELETE' d_param;

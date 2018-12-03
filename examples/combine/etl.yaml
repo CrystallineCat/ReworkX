@@ -1,7 +1,5 @@
 extractor:
     networkx:
-        edge_type_attr: type
-        node_type_attr: type
         traversal:
         -   node: {alias: c, type: City}
         -   edge: {}
@@ -18,6 +16,6 @@ transformers:
         -   edge: {}
         -   node: {alias: i}
         set:
-        - {key: type, value: GeoInst, value_lookup: ''}
-        - {key: city_name, value: '', value_lookup: c.label}
-        - {key: inst_name, value: '', value_lookup: i.label}
+        - {key: type, value: 'Geo Institution'}
+        - {key: city_name, value_lookup: c.label}
+        - {key: inst_name, value_lookup: i.label}

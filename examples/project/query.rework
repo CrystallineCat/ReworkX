@@ -1,0 +1,5 @@
+MATCH   (p1:Person)-(wild)-(p2:Person)
+PROJECT (p1)-(p2)
+METHOD JACCARD Institution, City
+SET     name = wild.label
+DELETE  wild
