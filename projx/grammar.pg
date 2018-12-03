@@ -1,38 +1,35 @@
 // FIXME Case-insensitive keywords
 // FIXME Quote escaping
+// FIXME Better joining of subclauses
 
 @make_dict
 query: 'MATCH' type=graph_type? traversal=path transformers=clause* EOF;
 
+@make_keyword
 graph_type: 'GRAPH'
           | 'SUBGRAPH';
 
-@collect_flat
+@make_flat_list
 path: path edge node
     | node;
 
 @make_dict
-node:  '(' node=content ')';
+node:  '(' node=alias ')';
 
 @make_dict
-edge: '-[' edge=content ']-'
+edge: '-[' edge=alias ']-'
     | '-'  edge=empty_dict;
 
 @make_dict
-content: alias=ID ':' type=ID
-       | alias=ID;
+alias: alias=ID ':' type=ID
+     | alias=ID;
 
-@key_value
-clause: clause_type clause_params;
+@make_pair_dict_from_merged_dicts
+clause: 'TRANSFER' pattern=path subclause+
+      | 'PROJECT'  pattern=path subclause+
+      | 'COMBINE'  pattern=path subclause+;
 
-clause_type: 'TRANSFER'
-           | 'PROJECT'
-           | 'COMBINE';
-
-@join_dicts
-clause_params: pattern=path subclause+;
-
-@key_value
+@make_pair_dict
 subclause: 'DELETE' delete
          | 'SET'    set+[COMMA]
          | 'METHOD' method;
@@ -45,7 +42,7 @@ set: key=ID '='     value_lookup=LOOKUP
    | key=ID '=' '"' value=NOT_DOUBLE_QUOTE '"'
    | key=ID '=' "'" value=NOT_SINGLE_QUOTE "'";
 
-@key_value
+@make_pair_dict
 method: 'JACCARD' arguments
       | 'NEWMAN'  arguments
       | 'EDGES'   arguments

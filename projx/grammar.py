@@ -5,26 +5,31 @@ action = g.get_collector()
 
 
 @action
-def join_dicts(_, dicts, **kwds):
-    for x in dicts[1]:
-        kwds.update(x)
-
-    return kwds
+def make_keyword(_, nodes):
+    return nodes[0].lower()
 
 
 @action
-def collect_flat(_, nodes):
+def make_flat_list(_, nodes):
     return nodes[0] + nodes[1:] if len(nodes) > 1 else nodes or []
-
-
-@action
-def key_value(_, nodes):
-    return {nodes[0].lower(): nodes[1]}
 
 
 @action
 def make_dict(_, nodes, **kwds):
     return kwds
+
+
+@action
+def make_pair_dict(_, nodes):
+    return {nodes[0].lower(): nodes[1]}
+
+
+@action
+def make_pair_dict_from_merged_dicts(_, nodes, **kwds):
+    for x in nodes[-1]:
+        kwds.update(x)
+
+    return {nodes[0].lower(): kwds}
 
 
 grammar = g.Grammar.from_file('projx/grammar.pg')
@@ -37,7 +42,7 @@ def parse_query(query: str) -> dict:
     return {
         'extractor': {
             'networkx': {
-                'type':      (data['type'] or 'subgraph').lower(),
+                'type':      data['type'] or 'subgraph',
                 'traversal': data['traversal'],
             },
         },
