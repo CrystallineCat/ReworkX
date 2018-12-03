@@ -1,0 +1,36 @@
+extractor:
+    networkx:
+        traversal:
+        -   node: {alias: p1, type: Person}
+        -   edge: {}
+        -   node: {alias: i, type: Institution}
+        -   edge: {}
+        -   node: {alias: c, type: City}
+        type: subgraph
+loader:
+    nx2nx: {}
+transformers:
+-   transfer:
+        delete:
+            alias: []
+        method:
+            attrs:
+                args: []
+        pattern:
+        -   node: {alias: i}
+        -   edge: {}
+        -   node: {alias: c}
+        set:
+        - {key: inst, value_lookup: i.label}
+-   project:
+        delete:
+            alias: [i]
+        method:
+            jaccard:
+                args: [Institution]
+        pattern:
+        -   node: {alias: p1}
+        -   edge: {}
+        -   node: {alias: c}
+        set:
+        - {}

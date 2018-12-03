@@ -1,26 +1,26 @@
 extractor:
-  networkx:
-    edge_type_attr: type
-    node_type_attr: type
-    traversal:
-    - node: {alias: p1, type: Person}
-    - edge: {}
-    - node: {alias: wild}
-    - edge: {}
-    - node: {alias: p2, type: Person}
-    type: subgraph
+    networkx:
+        edge_type_attr: type
+        node_type_attr: type
+        traversal:
+        -   node: {alias: p1, type: Person}
+        -   edge: {}
+        -   node: {alias: wild}
+        -   edge: {}
+        -   node: {alias: p2, type: Person}
+        type: subgraph
 loader:
-  nx2nx: {}
+    nx2nx: {}
 transformers:
-- project:
-    delete:
-      alias: [wild]
-    method:
-      jaccard:
-        args: [Institution, City]
-    pattern:
-    - node: {alias: p1}
-    - edge: {}
-    - node: {alias: p2}
-    set:
-    - {key: name, value_lookup: wild.label}
+-   project:
+        delete:
+            alias: [wild]
+        method:
+            jaccard:
+                args: [Institution, City]
+        pattern:
+        -   node: {alias: p1}
+        -   edge: {}
+        -   node: {alias: p2}
+        set:
+        - {key: name, value_lookup: wild.label}

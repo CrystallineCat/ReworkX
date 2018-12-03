@@ -74,7 +74,8 @@ def project(source, target, graph, method="jaccard", params=None, attrs=None,
         graph[source][target].update(merged_attrs)
         graph[target][source].update(merged_attrs)
     else:
-        graph.add_edge(source, target, **attrs)
+        graph.add_edge(source, target)
+        graph[source][target].update(attrs)
     return graph
 
 

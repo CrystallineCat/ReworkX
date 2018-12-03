@@ -1,0 +1,24 @@
+extractor:
+    networkx:
+        edge_type_attr: type
+        node_type_attr: type
+        traversal:
+        -   node: {alias: c, type: City}
+        -   edge: {}
+        -   node: {alias: i, type: Institution}
+        type: graph
+loader:
+    nx2nx: {}
+transformers:
+-   transfer:
+        delete:
+            alias: [c]
+        method:
+            edges:
+                args: [Person]
+        pattern:
+        -   node: {alias: c}
+        -   edge: {}
+        -   node: {alias: i}
+        set:
+        - {key: city, value_lookup: c.label}

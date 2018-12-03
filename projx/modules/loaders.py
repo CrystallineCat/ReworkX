@@ -63,7 +63,7 @@ def nx2nx_single_transform_loader(transformer, paths, graph, node_type_attr,
     trans_kwrd = list(transformer.keys())[0]
     trans = transformer[trans_kwrd]
     to_set = trans.get("set", [])
-    method = trans.get("method", {"none": []})
+    method = trans.get("method", {"none": {"args": []}})
     method_kwrd = list(method.keys())[0]
     params = method.get(method_kwrd, {"args": []})["args"]
     fn = projector.transformations[trans_kwrd]

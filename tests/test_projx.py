@@ -1,36 +1,18 @@
-import projx
-import yaml
-import networkx as nx
+import projx as px
 
 
-def listed(view):
-    return list(map(list, sorted(view(data=True))))
+def try_to_transform(source, etl, target):
+    graph  = px.load_graph(f'examples/{source}.graph.yaml')
+    expect = px.load_graph(f'examples/{target}.graph.yaml')
+    via    = px.load_etl  (f'examples/{etl}.etl.yaml')
+    result = px.execute_etl(via, graph)
 
-
-def content_of(graph):
-    return {
-        'nodes': listed(graph.nodes),
-        'edges': listed(graph.edges),
-    }
-
-
-def graph_from(content):
-    graph = nx.Graph()
-    graph.add_nodes_from(content['nodes'])
-    graph.add_edges_from(content['edges'])
-    return graph
+    assert px.content_of(result)['nodes'] == px.content_of(expect)['nodes']
+    assert px.content_of(result)['edges'] == px.content_of(expect)['edges']
 
 
 def test_project_etl():
-    with open('examples/example.yaml') as file:
-        graph = graph_from(yaml.load(file))
-
-    #with open('examples/example.graph.yaml', 'w') as file:
-    #    reference = yaml.dump(content_of(graph), file, default_flow_style=True, indent=4)
-
-    result = projx.execute_etl(projx.project_etl, graph)
-
-    with open('examples/example_projected.yaml') as file:
-        reference = yaml.load(file)
-
-    assert content_of(result) == reference
+    try_to_transform('example', 'project',         'projected')
+    try_to_transform('example', 'transfer',        'transferred')
+    try_to_transform('example', 'combine',         'combined')
+    try_to_transform('example', 'multi_transform', 'multi_transformed')
