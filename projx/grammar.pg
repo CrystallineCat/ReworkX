@@ -1,22 +1,20 @@
 // FIXME Case-insensitive keywords
 // FIXME Quote escaping
+// FIXME Look closer at dsm_clauses
+// FIXME Look at ATTRS
 
 @make_dict
-query: 'MATCH' type=graph_type? traversal=node_pattern transformers=transformation_clauses? EOF;
+query: 'MATCH' type=graph_type? traversal=path transformers=clause* EOF;
 
-@pass_lower
 graph_type: 'GRAPH'
           | 'SUBGRAPH';
 
-@collect
-node_pattern: edge_pattern node
-            | node;
-
-@collect_first
-edge_pattern: node_pattern edge;
+@collect_flat
+path: path edge node
+    | node;
 
 @make_dict
-node: '(' node=content ')';
+node:  '(' node=content ')';
 
 @make_dict
 edge: '-[' edge=content ']-'
@@ -29,21 +27,15 @@ content: alias=ID ':' type=ID
 @make_dict
 nothing: EMPTY;
 
-transformation_clauses: transformation_clause+;
-
 @key_value
-transformation_clause: transformation_type params;
+clause: clause_type clause_params;
+
+clause_type: 'TRANSFER'
+           | 'PROJECT'
+           | 'COMBINE';
 
 @join_dicts
-params: pattern dsm_clauses;
-
-@make_dict
-pattern: pattern=node_pattern;
-
-@pass_lower
-transformation_type: 'TRANSFER'
-                   | 'PROJECT'
-                   | 'COMBINE';
+clause_params: pattern=path dsm_clauses;
 
 @join_dicts
 dsm_clauses: d s m | d m s | s d m | s m d | m s d | m d s;
@@ -58,7 +50,7 @@ d_param: alias=ID+[COMMA];
 s: 'SET' s_params+[COMMA];
 
 @make_dict
-s_params: key=ID '=' value_lookup=LOOKUP
+s_params: key=ID '='     value_lookup=LOOKUP
         | key=ID '=' '"' value=NOT_DOUBLE_QUOTE '"'
         | key=ID '=' "'" value=NOT_SINGLE_QUOTE "'";
 
@@ -67,14 +59,14 @@ m: 'METHOD' 'ATTRS'
  | 'METHOD' m_params;
 
 @key_value
-m_params: algorithm m_params_params;
-
-@make_dict
-m_params_params: args=ID+[COMMA];
+m_params: algorithm m_args;
 
 algorithm: 'JACCARD'
          | 'NEWMAN'
          | 'EDGES';
+
+@make_dict
+m_args: args=ID+[COMMA];
 
 
 terminals
