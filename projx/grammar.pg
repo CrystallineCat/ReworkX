@@ -1,0 +1,86 @@
+// FIXME Case-insensitive keywords
+// FIXME Quote escaping
+
+@make_dict
+query: 'MATCH' type=graph_type? traversal=node_pattern transformers=transformation_clauses? EOF;
+
+@pass_lower
+graph_type: 'GRAPH'
+          | 'SUBGRAPH';
+
+@collect
+node_pattern: edge_pattern node
+            | node;
+
+@collect_first
+edge_pattern: node_pattern edge;
+
+@make_dict
+node: '(' node=content ')';
+
+@make_dict
+edge: '-[' edge=content ']-'
+    | '-'  edge=nothing;
+
+@make_dict
+content: alias=ID ':' type=ID
+       | alias=ID;
+
+@make_dict
+nothing: EMPTY;
+
+transformation_clauses: transformation_clause+;
+
+@key_value
+transformation_clause: transformation_type params;
+
+@join_dicts
+params: pattern dsm_clauses;
+
+@make_dict
+pattern: pattern=node_pattern;
+
+@pass_lower
+transformation_type: 'TRANSFER'
+                   | 'PROJECT'
+                   | 'COMBINE';
+
+@join_dicts
+dsm_clauses: d s m | d m s | s d m | s m d | m s d | m d s;
+
+@key_value
+d: 'DELETE' d_param;
+
+@make_dict
+d_param: alias=ID+[COMMA];
+
+@key_value
+s: 'SET' s_params+[COMMA];
+
+@make_dict
+s_params: key=ID '=' value_lookup=LOOKUP
+        | key=ID '=' '"' value=NOT_DOUBLE_QUOTE '"'
+        | key=ID '=' "'" value=NOT_SINGLE_QUOTE "'";
+
+@key_value
+m: 'METHOD' 'ATTRS'
+ | 'METHOD' m_params;
+
+@key_value
+m_params: algorithm m_params_params;
+
+@make_dict
+m_params_params: args=ID+[COMMA];
+
+algorithm: 'JACCARD'
+         | 'NEWMAN'
+         | 'EDGES';
+
+
+terminals
+COMMA: ',';
+ID: /(\w|\d|\_)+/;
+LOOKUP: /(\w|\d|\_)+[.](\w|\d|\_)+/;
+NOT_DOUBLE_QUOTE: /[^"]*/;
+NOT_SINGLE_QUOTE: /[^']*/;
+KEYWORD: /\w+/;

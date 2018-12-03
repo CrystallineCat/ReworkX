@@ -6,9 +6,9 @@ authors = ["M. Niederlechner <mniederlechner@gmx.net>"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
-pyparsing = "^2.3"
 networkx = "^2.2"
 more-itertools = "^4.3"
+parglare = "^0.8.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
