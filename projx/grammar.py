@@ -1,26 +1,34 @@
 import parglare as g
 
 
-def merge_dicts(*dicts):
-    d = {}
-
-    for x in dicts:
-        d.update(x)
-
-    return d
+action = g.get_collector()
 
 
+@action
+def join_dicts(_, dicts, **kwds):
+    for x in dicts[1]:
+        kwds.update(x)
+
+    return kwds
+
+
+@action
 def collect_flat(_, nodes):
     return nodes[0] + nodes[1:] if len(nodes) > 1 else nodes or []
 
 
+@action
+def key_value(_, nodes):
+    return {nodes[0].lower(): nodes[1]}
+
+
+@action
+def make_dict(_, nodes, **kwds):
+    return kwds
+
+
 grammar = g.Grammar.from_file('projx/grammar.pg')
-parser  = g.Parser(grammar, actions={
-    'collect_flat': collect_flat,
-    'make_dict':  lambda context, nodes, **kwds: kwds,
-    'key_value':  lambda context, nodes: {nodes[0].lower(): nodes[1]},
-    'join_dicts': lambda context, nodes, **kwds: merge_dicts(*[node for node in nodes if isinstance(node, dict)], kwds),
-})
+parser  = g.Parser(grammar, actions=action.all)
 
 
 def parse_query(query: str) -> dict:
